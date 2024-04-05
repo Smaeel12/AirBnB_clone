@@ -4,27 +4,8 @@
 import cmd
 import os
 from models.base_model import BaseModel
-from models.user import User
 from models.engine.file_storage import FileStorage
 from models import storage
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
-from models.state import State
-from pprint import pprint
-
-
-def cast(str):
-    """catsts the input string to the its actual data type"""
-    if str.isdigit():
-        return int(str)
-    else:
-        try:
-            res = float(str)
-            return res
-        except ValueError:
-            return str
 
 
 class HBNBCommand(cmd.Cmd):
@@ -40,10 +21,6 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, line):
         """Quit command to exit the program"""
         return True
-
-    def do_clear(self, line):
-        """clears the console"""
-        os.system("clear")
 
     def do_create(self, line):
         """
