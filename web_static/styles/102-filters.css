@@ -1,0 +1,103 @@
+.filters {
+    background-color: white;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    display: flex;
+    flex-flow: wrap column;
+    width: 95%;
+}
+
+.locations, .filters .amenities {
+    display: flex;
+    flex-flow: wrap column;
+    border-bottom: 1px solid #DDDDDD;
+    padding: 10px;
+    position: relative;
+}
+
+.locations h3, .amenities h3 {
+    font-weight: 600;
+}
+
+.locations h4, .amenities h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.locations h3, .amenities h3, .locations h4, .amenities h4, .popover h2{
+    margin: unset;
+}
+
+.search {
+    text-align: center;
+}
+
+.search button {
+    background-color: #FF5A5F;
+    color: #FFFFFF;
+    font-size: 18px;
+    border: none;
+    border-radius: 4px;
+    height: 48px;
+    min-width: 50%;
+    align-self: center;
+    margin: 10px 0px;
+}
+
+.search button:hover {
+    opacity: 90%;
+}
+
+.popover {
+    background-color: #FAFAFA;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    position: absolute;
+    top: 100%;
+    z-index: 1;
+    width: 100%;
+    padding: 20px 0px;
+    visibility: hidden;
+}
+
+.locations .popover > ul{
+    display: flex;
+    flex-flow: wrap column;
+    gap: 10px;
+}
+
+.popover li {
+    padding-left: 30px;
+}
+
+.locations .popover, .amenities .popover{
+    left: -1px;
+}
+
+.amenities:hover .popover, .locations:hover .popover {
+    visibility: visible;
+}
+
+
+@media screen and (min-width: 768px) {
+    .filters {
+        flex-flow: wrap row;
+    }
+    
+    .locations {
+        border-bottom: unset;
+        border-right: 1px solid #DDDDDD;
+        width: 25%;
+    }
+
+    .filters .amenities {
+        border-bottom: unset;
+        width: 25%;
+    }
+
+    .search {
+        padding-right: 10px;
+        text-align: right;
+        flex-grow: 1;
+    }
+}
