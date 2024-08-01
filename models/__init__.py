@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 """
-This script initializes a storage system for an application and loads existing
-data if available.
+0x00. AirBnB clone - The console
 """
 from models.engine.file_storage import FileStorage
-from models.user import User
 
 
 storage = FileStorage()
