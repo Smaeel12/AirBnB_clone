@@ -33,34 +33,32 @@ class HBNBCommand(cmd.Cmd):
         name and id
         """
         cmd_p = line.split()
-        if (len(cmd_p) != 2):
-            if (len(cmd_p) == 0):
-                print("** class name missing **")
-            if (len(cmd_p) == 1):
-                if (cmd_p[0] != 'BaseModel'):
-                    print("** class doesn't exist **")
-                else:
-                    print("** instance id missing **")
+        if (len(cmd_p) == 0):
+            print("** class name missing **")
+            return
+        if (len(cmd_p) >= 1 and cmd_p[0] != 'BaseModel'):
+            print("** class doesn't exist **")
+            return
+        if (len(cmd_p) == 1):
+            print("** instance id missing **")
+            return
+        if (storage.all().get(f'BaseModel.{cmd_p[1]}')):
+            print(storage.all().get(f'BaseModel.{cmd_p[1]}'))
         else:
-            if (storage.all().get(f'BaseModel.{cmd_p[1]}')):
-                print(storage.all().get(f'BaseModel.{cmd_p[1]}'))
-            else:
-                print("** no instance found **")
+            print("** no instance found **")
 
     # Create Command
     def do_destroy(self, line):
         """ Deletes an instance based on the class name and id
         """
         cmd_p = line.split()
-        if (len(cmd_p) != 2):
-            if (len(cmd_p) == 0):
-                print("** class name missing **")
-            if (len(cmd_p) == 1):
-                if (cmd_p[0] != 'BaseModel'):
-                    print("** class doesn't exist **")
-                else:
-                    print("** instance id missing **")
-        else:
+        if (len(cmd_p) == 0):
+            print("** class name missing **")
+        if (len(cmd_p) >= 1 and (cmd_p[0] != 'BaseModel')):
+                print("** class doesn't exist **")
+        if (len(cmd_p) == 1):
+                print("** instance id missing **")
+        if (len(cmd_p) >= 1 and (cmd_p[0] == 'BaseModel')):
             if (storage.all().get(f'BaseModel.{cmd_p[1]}')):
                 storage.all().pop(f'BaseModel.{cmd_p[1]}')
                 storage.save()
@@ -87,17 +85,16 @@ class HBNBCommand(cmd.Cmd):
         if (len(cmd_p) == 0):
             print("** class name missing **")
             return
-        if (len(cmd_p) == 1):
-            if (cmd_p[0] != 'BaseModel'):
+        if (len(cmd_p) >= 1 and cmd_p[0] != 'BaseModel'):
                 print("** class doesn't exist **")
-            else:
+        if (len(cmd_p) == 1):
                 print("** instance id missing **")
-            return
-        if (len(cmd_p) == 2):
-            if not storage.all().get(f'BaseModel.{cmd_p[1]}'):
+                return
+        if (len(cmd_p) >= 2 and not storage.all().get(f'BaseModel.{cmd_p[1]}')):
                 print("** no instance found **")
-            else:
-                print("** attribute name missing **")
+                return
+        if (len(cmd_p) == 2):
+            print("** attribute name missing **")
             return
         if (len(cmd_p) == 3):
             print("** value missing **")
@@ -133,7 +130,6 @@ class HBNBCommand(cmd.Cmd):
         """ Show the help for EOF command
         """
         print("Quit command to exit the program")
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
