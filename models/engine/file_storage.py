@@ -1,6 +1,11 @@
 import json
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place 
+from models.state import State 
+from models.city import City 
+from models.amenity import Amenity 
+from models.review import Review 
 
 class FileStorage:
     """ A class that serializes instances to a JSON file and deserializes JSON
@@ -11,7 +16,14 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
-    __available_classes = {"BaseModel": BaseModel, "User": User}
+    __available_classes = {"BaseModel": BaseModel,
+                           "User": User,
+                           "Place": Place,
+                           "State": State,
+                           "City": City,
+                           "Amenity": Amenity,
+                           "Review": Review
+                           }
 
     def __init__(self):
         """init method for FileStorage class"""

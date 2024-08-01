@@ -5,6 +5,11 @@ interpreter
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place 
+from models.state import State 
+from models.city import City 
+from models.amenity import Amenity 
+from models.review import Review 
 from models import storage
 
 
@@ -14,7 +19,7 @@ class HBNBCommand(cmd.Cmd):
         prompt(str): prompt string
     """
     prompt = "(hbnb) "
-    available_classes = [BaseModel, User]
+    __available_classes = [BaseModel, User, Place, State, City, Amenity, Review]
 
     # Create Command
     def do_create(self, line):
@@ -23,7 +28,7 @@ class HBNBCommand(cmd.Cmd):
         if (len(line) == 0):
             print("** class name missing **")
             return
-        for value in HBNBCommand.available_classes:
+        for value in HBNBCommand.__available_classes:
             if (line == value.__name__):
                 obj = value()
                 obj.save()
@@ -41,7 +46,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         if (len(cmd_p) >= 1):
-            for value in HBNBCommand.available_classes:
+            for value in HBNBCommand.__available_classes:
                 if (cmd_p[0] == value.__name__):
                     if (len(cmd_p) == 1):
                         print("** instance id missing **")
@@ -63,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         if (len(cmd_p) >= 1):
-            for value in HBNBCommand.available_classes:
+            for value in HBNBCommand.__available_classes:
                 if (cmd_p[0] == value.__name__):
                     if (len(cmd_p) == 1):
                         print("** instance id missing **")
@@ -86,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
             obj_list = [str(obj) for obj in storage.all().values()]
             print(obj_list)
             return
-        for value in HBNBCommand.available_classes:
+        for value in HBNBCommand.__available_classes:
             if (line == value.__name__):
                 obj_list = [str(obj) for obj in storage.all().values()]
                 print(obj_list)
@@ -102,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
         if (len(cmd_p) == 0):
             print("** class name missing **")
             return
-        for value in HBNBCommand.available_classes:
+        for value in HBNBCommand.__available_classes:
             if (cmd_p[0] == value.__name__):
                 if (len(cmd_p) == 1):
                     print("** instance id missing **")
