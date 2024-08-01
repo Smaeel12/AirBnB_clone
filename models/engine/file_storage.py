@@ -13,7 +13,7 @@ class FileStorage:
         __objects(dictionary): Stores all objects by <class name>.id
     """
     __file_path = "file.json"
-    __objects = dict()
+    __objects = {} 
     __avaliable_classes = {"BaseModel": BaseModel, "User": User}
 
     def all(self):
@@ -24,25 +24,25 @@ class FileStorage:
     def new(self, obj):
         """ Sets in __objects the obj with key <obj class name>.id
         """
-        FileStorage.__objects.setdefault(f"{obj.__class__.__name__}.{obj.id}",
+        self.__objects.setdefault(f"{obj.__class__.__name__}.{obj.id}",
                                          obj)
 
     def save(self):
         """ Serializes __objects to the JSON file
         """
-        with open(FileStorage.__file_path, "w") as f:
+        with open(self.__file_path, "w") as f:
             json.dump({key: value.to_dict() for key, value in
-                       FileStorage.__objects.items()}, f)
+                       self.__objects.items()}, f)
 
     def reload(self):
         """ Deserializes the JSON file to __objects
         """
         try:
-            f = open(FileStorage.__file_path, "r")
+            with open(FileStorage.__file_path, "r") as f:
+                obj_dict = json.load(f)
+                for key, value in obj_dict.items():
+                    cls_name = key.split('.')[0]
+                    if cls_name in self.__available_classes:
+                        self.__objects[key] = self.__available_classes[cls_name](**value)
         except Exception:
             pass
-        else:
-            for key, value in json.load(f).items():
-                if (key.split('.')[0] in FileStorage.__avaliable_classes.keys()):
-                    FileStorage.__objects.setdefault(key, \
-                    FileStorage.__avaliable_classes[key.split('.')[0]](**value))
