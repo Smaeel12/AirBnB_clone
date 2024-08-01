@@ -16,7 +16,6 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     available_classes = [BaseModel, User]
 
-
     # Create Command
     def do_create(self, line):
         """ Creates a new instance of BaseModel
@@ -108,9 +107,10 @@ class HBNBCommand(cmd.Cmd):
                 if (len(cmd_p) == 1):
                     print("** instance id missing **")
                     return
-                if (len(cmd_p) >= 2 and not storage.all().get(f'{value.__name__}.{cmd_p[1]}')):
-                        print("** no instance found **")
-                        return
+                if (len(cmd_p) >= 2 and
+                   not storage.all().get(f'{value.__name__}.{cmd_p[1]}')):
+                    print("** no instance found **")
+                    return
                 if (len(cmd_p) == 2):
                     print("** attribute name missing **")
                     return
@@ -121,7 +121,6 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, cmd_p[2], cmd_p[3])
                 return
         print("** class doesn't exist **")
-
 
     # Emptyline Handling
     def emptyline(self):
@@ -151,6 +150,7 @@ class HBNBCommand(cmd.Cmd):
         """ Show the help for EOF command
         """
         print("Quit command to exit the program")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
