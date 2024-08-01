@@ -1,5 +1,6 @@
 import json
 from models.base_model import BaseModel
+from models.user import User
 """ Serializes instances to a JSON file and deserializes JSON file to instances
 """
 
@@ -13,6 +14,7 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = dict()
+    __avaliable_classes = {"BaseModel": BaseModel, "User": User}
 
     def all(self):
         """ Returns the dictionary __objects
@@ -41,4 +43,6 @@ class FileStorage:
             pass
         else:
             for key, value in json.load(f).items():
-                FileStorage.__objects.setdefault(key, BaseModel(**value))
+                if (key.split('.')[0] in FileStorage.__avaliable_classes.keys()):
+                    FileStorage.__objects.setdefault(key, \
+                    FileStorage.__avaliable_classes[key.split('.')[0]](**value))
