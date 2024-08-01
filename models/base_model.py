@@ -19,17 +19,22 @@ class BaseModel:
             instance is created and it will be updated every time the object
             changed
         """
-        from . import storage
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
-        if (kwargs):
-            self.id = kwargs['id']
-            self.created_at = datetime.fromisoformat(kwargs['created_at'])
-            self.updated_at = datetime.fromisoformat(kwargs['updated_at'])
+        if kwargs:
+            if "id" not in kwargs:
+                kwargs["id"] = str(uuid.uuid4())
+            if "created_at" in kwargs:
+                kwargs["created_at"] = datetime.fromisoformat(kwargs['created_at'])
+            if "updated_at" in kwargs:
+                kwargs["updated_at"] = datetime.fromisoformat(kwargs['updated_at'])
+            for key, value in kwargs.items():
+                if key != '__class__':
+                    setattr(self, key, value)
         else:
-            models.storage.new(self)
-
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
+            storage.new(self)
+    
     def __str__(self):
         """ Representation to the class instance
         """
@@ -46,8 +51,9 @@ class BaseModel:
         """ Returns a dictionary containing all keys/values of the class
         dictionary
         """
+        class_name = self.__class__.__name__
         dict_copy = self.__dict__.copy()
-        dict_copy.update({'__class__': self.__class__.__name__,
+        dict_copy.update({'__class__': class_name,
                           'created_at': self.created_at.isoformat(),
                           'updated_at': self.updated_at.isoformat()})
         return dict_copy
