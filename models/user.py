@@ -1,17 +1,11 @@
 #!/usr/bin/python3
-"""
-0x00. AirBnB clone - The console
-"""
+"""Defines the User class."""
 from models.base_model import BaseModel
 
 
 class User(BaseModel):
     """
-    Class User that inherits from BaseModel
-        - Update FileStorage to manage correctly serialization and
-        deserialization of User.
-        - Update your command interpreter (console.py) to allow show,
-        create, destroy, update and all used with User.
+    User class that inherits from BaseModel.
     """
     email = ""
     password = ""
@@ -19,5 +13,7 @@ class User(BaseModel):
     last_name = ""
 
     def __init__(self, *args, **kwargs):
-        """The init method for the User class"""
+        """
+        Constructor for User class.
+        """
         super().__init__(*args, **kwargs)
