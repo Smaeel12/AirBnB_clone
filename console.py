@@ -54,10 +54,13 @@ class HBNBCommand(cmd.Cmd):
         cmd_p = line.split()
         if (len(cmd_p) == 0):
             print("** class name missing **")
+            return
         if (len(cmd_p) >= 1 and (cmd_p[0] != 'BaseModel')):
                 print("** class doesn't exist **")
+                return
         if (len(cmd_p) == 1):
                 print("** instance id missing **")
+                return
         if (len(cmd_p) >= 1 and (cmd_p[0] == 'BaseModel')):
             if (storage.all().get(f'BaseModel.{cmd_p[1]}')):
                 storage.all().pop(f'BaseModel.{cmd_p[1]}')
