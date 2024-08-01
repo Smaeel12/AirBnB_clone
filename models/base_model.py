@@ -19,6 +19,7 @@ class BaseModel:
             instance is created and it will be updated every time the object
             changed
         """
+        from . import storage
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
