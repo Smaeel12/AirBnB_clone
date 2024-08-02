@@ -32,11 +32,11 @@ class BaseModel:
             if "id" not in kwargs:
                 kwargs["id"] = str(uuid.uuid4())
             if "created_at" in kwargs:
-                kwargs["created_at"] = datetime.fromisoformat(kwargs["\
-                created_at"])
+                kwargs["created_at"] = datetime.fromisoformat(
+                    kwargs["created_at"])
             if "updated_at" in kwargs:
-                kwargs["updated_at"] = datetime.fromisoformat(kwargs["\
-                updated_at"])
+                kwargs["updated_at"] = datetime.fromisoformat(
+                    kwargs["updated_at"])
             for key, value in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, value)
