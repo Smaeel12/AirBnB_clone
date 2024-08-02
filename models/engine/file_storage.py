@@ -17,7 +17,7 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    __available_classes = {
+    __ab_classes = {
             'BaseModel': BaseModel,
             'User': User,
             'State': State,
@@ -35,14 +35,15 @@ class FileStorage:
     def new(self, obj):
         """ Sets in __objects the obj with key <obj class name>.id.
         """
-        FileStorage.__objects.setdefault(f"{obj.__class__.__name__}.{obj.id}", obj)
+        FileStorage.__objects.setdefault(f"{obj.__class__.__name__}.{obj.id}",
+                                         obj)
 
     def save(self):
         """ Serializes __objects to the JSON file.
         """
         with open(FileStorage.__file_path, "w") as f:
             json.dump({key: value.to_dict() for key, value in
-                              FileStorage.__objects.items()}, f)
+                      FileStorage.__objects.items()}, f)
 
     def reload(self):
         """ Deserializes the JSON file to __object
@@ -52,8 +53,8 @@ class FileStorage:
                 s_dict = json.load(f)
                 for key, value in s_dict.items():
                     cls_name = key.split('.')[0]
-                    if cls_name in FileStorage.__available_classes:
-                        obj = FileStorage.__available_classes[cls_name](**value)
+                    if cls_name in FileStorage.__ab_classes:
+                        obj = FileStorage.__ab_classes[cls_name](**value)
                         self.new(obj)
         except Exception:
             pass
