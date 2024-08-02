@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import json
-import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -18,7 +17,7 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    classes = {
+    __available_classes = {
             'BaseModel': BaseModel,
             'User': User,
             'State': State,
@@ -29,38 +28,32 @@ class FileStorage:
             }
 
     def all(self):
-        """./
-        Returns the dictionary with all objects of a specific class.
+        """ Returns the dictionary with all objects of a specific class.
         """
         return FileStorage.__objects
 
     def new(self, obj):
+        """ Sets in __objects the obj with key <obj class name>.id.
         """
-        Sets in __objects the obj with key <obj class name>.id.
-        """
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.__objects[key] = obj
+        FileStorage.__objects.setdefault(f"{obj.__class__.__name__}.{obj.id}", obj)
 
     def save(self):
+        """ Serializes __objects to the JSON file.
         """
-        Serializes __objects to the JSON file.
-        """
-        serialized_objects = {key: obj.to_dict() for key, obj in
-                              self.__objects.items()}
-        with open(self.__file_path, "w", encoding="utf-8") as file:
-            json.dump(serialized_objects, file)
+        with open(FileStorage.__file_path, "w") as f:
+            json.dump({key: value.to_dict() for key, value in
+                              FileStorage.__objects.items()}, f)
 
     def reload(self):
-        ''' deserializes the JSON file to __object
-        '''
-        loaded_dict = {}
+        """ Deserializes the JSON file to __object
+        """
         try:
             with open(FileStorage.__file_path, 'r') as f:
-                loaded_dict = json.load(f)
-        except FileNotFoundError:
-            return
-        for k, v in loaded_dict.items():
-            class_name = k.split('.')[0]
-            if class_name in self.classes:
-                obj = self.classes[class_name](**v)
-                self.new(obj)
+                s_dict = json.load(f)
+                for key, value in s_dict.items():
+                    cls_name = key.split('.')[0]
+                    if cls_name in FileStorage.__available_classes:
+                        obj = FileStorage.__available_classes[cls_name](**value)
+                        self.new(obj)
+        except Exception:
+            pass

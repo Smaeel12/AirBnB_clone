@@ -7,48 +7,44 @@ for other classes.
 
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
-    """
-    BaseModel class for common attributes and methods.
-
-    Attributes:
-        id (str): A unique identifier generated using UUID.
-        created_at (datetime): The creation timestamp.
-        updated_at (datetime): The last update timestamp.
+    """ A class that defines all common attributes/methods for other classes
     """
 
     def __init__(self, *args, **kwargs):
-        """
-        Initializes a new instance of the BaseModel class.
-
-        It assigns a unique ID and timestamps. If kwargs is provided,
-        it populates the instance attributes.
-
+        """ Initialize the class
+        Attributes:
+            id(str): unique id for each BaseModel instance
+            created_at(datetime): Assign with the current datetime when an
+            instance is created
+            updated_at(datetime): Assign with the current datetime when an
+            instance is created and it will be updated every time the object
+            changed
         Args:
-            *args: Unused.
-            **kwargs: Dictionary with attribute values.
+            *args: not used
+            **kwargs: each value of this dictionary is the value of
+            this attribute name
         """
-        from . import storage
-        tf = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             if "id" not in kwargs:
                 kwargs["id"] = str(uuid.uuid4())
             if "created_at" in kwargs:
-                kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
-                                                         tf)
+                kwargs["created_at"] = datetime.fromisoformat(kwargs["\
+                created_at"])
             if "updated_at" in kwargs:
-                kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"],
-                                                         tf)
+                kwargs["updated_at"] = datetime.fromisoformat(kwargs["\
+                updated_at"])
             for key, value in kwargs.items():
-                if key != '__class__':
+                if key != "__class__":
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -58,14 +54,13 @@ class BaseModel:
             str: A formatted string with class name, ID,
             and dictionary representation.
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__,
-                                     self.id, self.__dict__)
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
-        from . import storage
-        """Update the `updated_at` attribute with the current datetime."""
+        """ Update the `updated_at` attribute with the current datetime.
+        """
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """
