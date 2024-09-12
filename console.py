@@ -1,3 +1,6 @@
+"""
+A consol to create and update objects
+"""
 #!/usr/bin/python3
 import cmd
 from models import storage
@@ -8,8 +11,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-import shlex
-""" a consol to create and update objects"""
 
 
 class HBNBCommand(cmd.Cmd):
@@ -131,6 +132,9 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def precmd(self, line) -> str:
+        """Hook method executed just before the command line is
+        interpreted, but after the input prompt is generated and issued.
+        """
         if ('.' in line):
             clss, _, cmd = line.partition('.')
             if cmd.endswith('()'):
