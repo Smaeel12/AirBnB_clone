@@ -9,7 +9,8 @@ class ConsoleTestCase(unittest.TestCase):
     def setUp(self):
         self.DARGS = {
             'create BaseModel': (len(storage.all()), len(storage.all()) + 1),
-            f'destroy BaseModel {list(storage.all().values())[-1].id}': (len(storage.all()) - 1, len(storage.all())),
+            f'destroy BaseModel {list(storage.all().values())[-1].id}':
+            (len(storage.all()) - 1, len(storage.all())),
         }
         self.SARGS = {
             'create': '** class name missing **\n',

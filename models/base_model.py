@@ -25,19 +25,16 @@ class BaseModel:
             **kwargs: each value of this dictionary is the value of
             this attribute name
         """
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
-        for key in kwargs:
-            if key == 'created_at':
-                self.created_at = datetime.fromisoformat(kwargs['created_at'])
-            elif key == 'updated_at':
-                self.updated_at = datetime.fromisoformat(kwargs['updated_at'])
-            elif key == '__class__':
-                continue
-            else:
-                setattr(self, key, kwargs[key])
-        if not kwargs:
+        if kwargs:
+            for key, val in kwargs.items():
+                if key in ['created_at', 'updated_at']:
+                    setattr(self, key, datetime.fromisoformat(val))
+                elif key == 'id':
+                    setattr(self, key, val)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
             models.storage.new(self)
 
     def __str__(self) -> str:
