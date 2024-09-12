@@ -1,7 +1,7 @@
+#!/usr/bin/python3
 """
 A consol to create and update objects
 """
-#!/usr/bin/python3
 import cmd
 from models import storage
 from models.base_model import BaseModel
@@ -81,8 +81,10 @@ class HBNBCommand(cmd.Cmd):
         try:
             clss = line.split()[0]
             if clss in self.__classes:
-                print([str(obj) for obj in objs.values()
-                       if obj.to_dict()['__class__'] == clss])
+                ls = [str(obj) for obj in objs.values()
+                      if obj.to_dict()['__class__'] == clss]
+                if ls:
+                    print(ls)
             else:
                 print("** class doesn't exist **")
         except Exception:
