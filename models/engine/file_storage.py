@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 import json
 from models.base_model import BaseModel
 from models.user import User
@@ -14,47 +13,41 @@ class FileStorage:
     FileStorage class for serializing and deserializing instances to/from
     a JSON file.
     """
-    __file_path = "file.json"
-    __objects = {}
+    __file_path: str = 'file.json'
+    __objects: dict = {}
+    __classes: dict = {'BaseModel': BaseModel,
+                       'User': User,
+                       'State': State,
+                       'City': City,
+                       'Amenity': Amenity,
+                       'Place': Place,
+                       'Review': Review
+                       }
 
-    __ab_classes = {
-            'BaseModel': BaseModel,
-            'User': User,
-            'State': State,
-            'City': City,
-            'Amenity': Amenity,
-            'Place': Place,
-            'Review': Review
-            }
-
-    def all(self):
+    def all(self) -> None:
         """ Returns the dictionary with all objects of a specific class.
         """
-        return FileStorage.__objects
+        return self.__objects
 
-    def new(self, obj):
+    def new(self, obj) -> None:
         """ Sets in __objects the obj with key <obj class name>.id.
         """
-        FileStorage.__objects.setdefault(f"{obj.__class__.__name__}.{obj.id}",
-                                         obj)
+        self.__objects[f'{obj.__class__.__name__}.{obj.id}'] = obj
 
-    def save(self):
+    def save(self) -> None:
         """ Serializes __objects to the JSON file.
         """
-        with open(FileStorage.__file_path, "w") as f:
-            json.dump({key: value.to_dict() for key, value in
-                      FileStorage.__objects.items()}, f)
+        with open(self.__file_path, 'w', encoding='utf-8') as f:
+            json.dump({key: obj.to_dict()
+                      for key, obj in self.__objects.items()}, f)
 
-    def reload(self):
+    def reload(self) -> None:
         """ Deserializes the JSON file to __object
         """
         try:
-            with open(FileStorage.__file_path, 'r') as f:
-                s_dict = json.load(f)
-                for key, value in s_dict.items():
-                    cls_name = key.split('.')[0]
-                    if cls_name in FileStorage.__ab_classes:
-                        obj = FileStorage.__ab_classes[cls_name](**value)
-                        self.new(obj)
+            with open(self.__file_path, 'r', encoding='utf-8') as f:
+                objs = json.load(f)
+            for key, obj in objs.items():
+                self.__objects[key] = self.__classes[key.split('.')[0]](**obj)
         except Exception:
             pass
