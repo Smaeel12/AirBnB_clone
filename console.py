@@ -77,18 +77,17 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, line):
         """Prints all string representation of all
         instances based or not on the class name."""
-        objs = storage.all()
         try:
             clss = line.split()[0]
             if clss in self.__classes:
-                ls = [str(obj) for obj in objs.values()
-                      if obj.to_dict()['__class__'] == clss]
-                if ls:
-                    print(ls)
+                print('[{}]'.format(
+                    ', '.join([str(obj) for obj in storage.all().values()
+                               if obj.__class__.__name__ == clss])))
             else:
                 print("** class doesn't exist **")
         except Exception:
-            print([str(obj) for obj in objs.values()])
+            print('[{}]'.format(', '.join([str(obj)
+                  for obj in storage.all().values()])))
 
     def do_update(self, line):
         """

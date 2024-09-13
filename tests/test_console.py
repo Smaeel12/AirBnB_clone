@@ -264,13 +264,14 @@ class TestHBNBCommand(unittest.TestCase):
         """# When called with no arguments
         it should print all string representations of all instances.
         """
+        formatted_objects = []
+        for obj in storage.all().values():
+            formatted_objects.append(f"{str(obj)}")
+
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().do_all("")
             output = f.getvalue().strip()
 
-            formatted_objects = []
-            for obj in storage.all().values():
-                formatted_objects.append(f"[{str(obj)} {obj.to_dict()}]")
             for formatted_obj in formatted_objects:
                 self.assertIn(formatted_obj, output)
 

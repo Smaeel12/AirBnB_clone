@@ -36,7 +36,7 @@ class BaseModel:
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.updated_at = self.created_at
             models.storage.new(self)
 
     def __str__(self) -> str:
@@ -47,7 +47,8 @@ class BaseModel:
             str: A formatted string with class name, ID,
             and dictionary representation.
         """
-        return '[{}] ({}) {}'.format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
+                                         self.__dict__)
 
     def save(self) -> None:
         """ Update the `updated_at` attribute with the current datetime.
