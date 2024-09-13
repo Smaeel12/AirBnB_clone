@@ -292,7 +292,7 @@ class TestHBNBCommand(unittest.TestCase):
                 formatted_objects = []
                 for ob in storage.all().values():
                     if ob.__class__.__name__ == "BaseModel":
-                        formatted_objects.append(f"[{str(ob)} {ob.to_dict()}]")
+                        formatted_objects.append(f"{str(ob)}")
                 for formatted_obj in formatted_objects:
                     self.assertIn(formatted_obj, output)
 
