@@ -1,0 +1,133 @@
+.places {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.places>h1 {
+    font-size: 30px;
+    width: 100%;
+}
+
+.places article {
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px #FF5A5F solid;
+    border-radius: 4px;
+    position: relative;
+}
+
+.places article>h2 {
+    font-size: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.price_by_night {
+    color: #FF5A5F;
+    border: 4px #FF5A5F solid;
+    border-radius: 50%;
+    min-width: 60px;
+    min-height: 60px;
+    font-size: 30px;
+    padding: 5px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.information {
+    height: 80px;
+    border-width: 1px 0;
+    border-color: #DDD;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 8px;
+    margin-bottom: 20px;
+}
+
+.max_guest,
+.number_rooms,
+.number_bathrooms {
+    background-position: top;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    width: 100px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.max_guest {
+    background-image: url('/images/icon_group.png');
+}
+
+.number_rooms {
+    background-image: url("/images/icon_bed.png");
+}
+
+.number_bathrooms {
+    background-image: url("/images/icon_bath.png");
+}
+
+.user {
+    margin-bottom: 10px;
+}
+
+article .amenities,
+article .reviews {
+    margin-top: 40px;
+}
+
+article .amenities h2,
+article .reviews h2 {
+    font-size: 16px;
+    border-bottom: 1px #DDD solid;
+}
+
+article .amenities ul,
+article .reviews ul {
+    list-style: none;
+}
+
+article .amenities ul li:first-child {
+    background-image: url('/images/icon_pets.png');
+}
+
+article .amenities ul li:nth-child(2) {
+    background-image: url('/images/icon_tv.png');
+}
+
+article .amenities ul li:last-child {
+    background-image: url('/images/icon_wifi.png');
+}
+
+article .amenities ul li {
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-indent: 30px;
+    line-height: 20px;
+    margin: 5px 0;
+}
+
+article .reviews h3 {
+    font-size: 14px;
+}
+
+article .reviews p {
+    font-size: 12px;
+}
+
+article .reviews ul li {
+    margin: 20px 0;
+}

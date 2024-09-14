@@ -1,0 +1,123 @@
+.filters {
+    display: flex;
+    height: 70px;
+    width: 100%;
+    border: 1px #DDDDDD solid;
+    align-items: center;
+    position: relative;
+}
+
+.filters .locations,
+.filters .amenities {
+    height: 100%;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.filters .locations {
+    border-right: 1px #DDDDDD solid;
+}
+
+.filters h2 {
+    font-weight: 800;
+}
+
+.filters h3 {
+    font-weight: 600;
+}
+
+.filters h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.filters h3,
+.filters h4 {
+    margin-left: 20px;
+}
+
+.filters .popover {
+    display: none;
+    position: absolute;
+    top: 100%;
+    background-color: #FAFAFA;
+    width: calc(100% + 2px);
+    left: -0.5%;
+    border: 1px solid #DDDDDD;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+.filters .popover>ul {
+    margin-bottom: 30px;
+}
+
+.filters .popover>ul:last-child {
+    margin: 0;
+}
+
+.filters .popover ul {
+    list-style: none;
+}
+
+.filters .popover ul li ul {
+    box-sizing: border-box;
+    padding-left: 40px;
+    width: 100%;
+}
+
+.filters .locations:hover .popover,
+.filters .amenities:hover .popover {
+    display: block;
+}
+
+.filters button {
+    font-size: 18px;
+    background-color: #FF5A5F;
+    color: #FFFFFF;
+    height: 48px;
+    width: 20%;
+    border: none;
+    border-radius: 4px;
+    justify-self: flex-end;
+    position: absolute;
+    right: 30px;
+}
+
+.filters button:hover {
+    opacity: 90%;
+}
+
+@media screen and (max-width: 600px) {
+    .filters {
+        flex-direction: column;
+        height: 200px;
+    }
+
+    .filters .locations,
+    .filters .amenities {
+        height: 60px;
+        width: 100%;
+    }
+
+    .filters .locations,
+    .filters .amenities {
+        border: none;
+        border-bottom: 1px #DDD solid;
+    }
+
+    .filters h4 {
+        font-size: 0.8em;
+    }
+
+    .filters button {
+        margin: auto;
+        position: static;
+        width: 70%;
+        height: 20%;
+    }
+}
